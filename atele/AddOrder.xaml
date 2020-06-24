@@ -1,0 +1,22 @@
+﻿<Window x:Class="atele.AddOrder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:atele"
+        mc:Ignorable="d"
+        Title="Добавление заказа" Height="230" Width="264" Loaded="Window_Loaded">
+    <Grid>
+        <Grid>
+            <StackPanel Margin="10">
+                <Label Content="Выберите клиента" />
+                <ComboBox x:Name="cmbKlient" Width="230"/>
+                <Label Content="Выберите услугу" />
+                <ComboBox x:Name="cmbUslugas" Width="230"/>
+                <Label Content="Выберите статус заказа" />
+                <ComboBox x:Name="cmbRAb" Width="230" />
+                <Button x:Name="btnadd" Content="Добавить" Margin="10" Width="100" Click="btnadd_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

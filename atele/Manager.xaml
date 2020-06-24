@@ -1,0 +1,200 @@
+﻿<Window x:Class="atele.Manager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:atele"
+        mc:Ignorable="d"
+        Title="Ателье ''Сапожок''" Height="440" Width="580" Loaded="Window_Loaded" Activated="Window_Activated">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="400"/>
+        </Grid.RowDefinitions>
+        <WrapPanel HorizontalAlignment="Center">
+            <Label x:Name="lblUser"/>
+        </WrapPanel>
+        <WrapPanel HorizontalAlignment="Right">
+        <Button x:Name="btnExit" Content="Выйти" Margin="5" Click="btnExit_Click" />
+        </WrapPanel>
+        <TabControl Grid.Row="1">
+            <TabItem Header="Заказы">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="285"/>
+                        <ColumnDefinition Width="285"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="180"/>
+                        <RowDefinition Height="200"/>
+                    </Grid.RowDefinitions>
+                    <WrapPanel Grid.ColumnSpan ="2" Grid.Row="0">
+                        <Label Content="Поиск по номеру заказа или фамилии клиента"/>
+                        <TextBox x:Name="txtSearchOrder" Margin="5" Width="120" TextChanged="txtSearchOrder_TextChanged"/>
+                    </WrapPanel>
+                    <DataGrid x:Name="dgOrder" AutoGenerateColumns="False" Grid.ColumnSpan="2" Grid.Row="1" SelectionChanged="dgOrder_SelectionChanged" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Номер заказа" Binding="{Binding Id_order}" Width="85"/>
+                            <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat='{}{0:dd.MM.yyyy}'}" Width="90"/>
+                            <DataGridTextColumn Header="Статус заказа" Binding="{Binding Name}" Width="90"/>
+                            <DataGridTextColumn Header="ФИО клиента" Binding="{Binding Fio_client}" Width="90"/>
+                            <DataGridTextColumn Header="Вид услуги" Binding="{Binding Name_services}" Width="100"/>
+                            <DataGridTextColumn Header="Стоимость, руб." Binding="{Binding Price_services}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Top">
+                        <GroupBox Header="Информация о заказчике" Grid.Row="1" Grid.Column="0" Height="75">
+                            <Grid>
+                                <DataGrid x:Name="dgInfo" AutoGenerateColumns="False"  Grid.ColumnSpan="2" Grid.Row="0" >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ФИО клиента" Binding="{Binding Fio_client}" Width="100"/>
+                                        <DataGridTextColumn Header="Телефон" Binding="{Binding Phone_client}" Width="100"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                    <Button x:Name="btnAddOrder" Content="Добавить заказ" Grid.Row="2" Grid.Column="1" Margin="92,10,92,165" Click="btnAddOrder_Click"/>
+                    <Label Content="Изменение статуса заказа" Grid.Row="2" Grid.Column="1" Margin="67,40,57,135"/>
+                    <ComboBox x:Name="cmbStatusOrder" Grid.Row="2" Grid.Column="1" Margin="92,65,92,110"/>
+                    <Button x:Name="btnSaveStatus" Content="Сохранить изменение статуса" Grid.Row="2" Grid.Column="1" Margin="57,105,57,70" Click="btnSaveStatus_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Клиенты">
+                <Grid Margin="0,0,0,22">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="285"/>
+                        <ColumnDefinition Width="285"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="150"/>
+                        <RowDefinition Height="200"/>
+                    </Grid.RowDefinitions>
+                    <WrapPanel Grid.ColumnSpan ="2">
+                        <Label Content="Поиск по номеру заказа или фамилии клиента"/>
+                        <TextBox x:Name="btnSфearchOrder" Margin="5" Width="120"/>
+                    </WrapPanel>
+                    <DataGrid x:Name="dgClient" AutoGenerateColumns="False" Grid.ColumnSpan="2" Grid.Row="0" SelectionChanged="dgClient_SelectionChanged" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ФИО клиента" Binding="{Binding Fio_client}" Width="100"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Phone_client}" Width="100"/>
+                            <DataGridCheckBoxColumn Header="Статус" Binding="{Binding Status_client}" Width="80"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Column="0" Grid.Row="1" Margin="5">
+                        <GroupBox Header="Добавить клиента" Height="185">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Введите ФИО" Grid.Row="0"/>
+                                <TextBox x:Name="txtFio" Grid.Row="1" Margin="5"/>
+                                <Label Content="Введите телефон" Grid.Row="2"/>
+                                <TextBox x:Name="txtPhone" Grid.Row="3" Margin="5"/>
+                                <Button x:Name="btnSaveClient" Content="Сохранить клиента" Width="130" Grid.Row="7" Margin="5" Click="btnSaveClient_Click"/>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="5">
+                        <GroupBox Header="Редактировать клиента" Grid.Row="1" Grid.Column="0" Height="185">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Выберите клиента из списка" Grid.Row="0" HorizontalAlignment="Center"/>
+                                <Label Content="Телефон" Grid.Row="2"/>
+                                <TextBox x:Name="txtPhoneUp" Grid.Row="3" Margin="5"/>
+                                <Label Content="Статус" Grid.Row="4"/>
+                                <WrapPanel Grid.Row="5">
+                                    <CheckBox x:Name="cbStatusClient" VerticalAlignment="Center" Margin="5"/>
+                                    <Label Content="Активный/неактивный"/>
+                                </WrapPanel>
+                                <Button x:Name="btnSaveChangeClient" Content="Сохранить изменения клиента" Width="180" Grid.Row="6" Margin="5" Click="btnSaveChangeClient_Click"/>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Услуги">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="285"/>
+                        <ColumnDefinition Width="285"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="150"/>
+                        <RowDefinition Height="200"/>
+                    </Grid.RowDefinitions>
+                    <WrapPanel Grid.ColumnSpan ="2">
+                        <Label Content="Поиск по номеру заказа или фамилии клиента"/>
+                        <TextBox x:Name="btnSфeasrchOrder" Margin="5" Width="120"/>
+                    </WrapPanel>
+                    <DataGrid x:Name="dgService" Grid.ColumnSpan="2" Grid.Row="0" AutoGenerateColumns="False" SelectionChanged="dgService_SelectionChanged" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Название услуги" Binding="{Binding Name_services}" Width="120"/>
+                            <DataGridTextColumn Header="Цена услуги" Binding="{Binding Price_services}" Width="100"/>
+                            <DataGridCheckBoxColumn Header="Статус" Binding="{Binding Status_services}" Width="80"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Column="0" Grid.Row="1" Margin="5">
+                        <GroupBox Header="Добавить услугу" Height="185">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Введите название" Grid.Row="0"/>
+                                <TextBox x:Name="txtNameS" Grid.Row="1" Margin="5"/>
+                                <Label Content="Введите цену" Grid.Row="2"/>
+                                <TextBox x:Name="txtPrice" Grid.Row="3" Margin="5"/>
+                                <Button x:Name="btnSaveService" Content="Сохранить услугу" Width="130" Grid.Row="7" Margin="5" Click="btnSaveService_Click"/>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="5">
+                        <GroupBox Header="Редактировать услугу" Grid.Row="1" Grid.Column="0" Height="185">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Выберите услугу из списка" Grid.Row="0" HorizontalAlignment="Center"/>
+                                <Label Content="Цена" Grid.Row="2"/>
+                                <TextBox x:Name="txtPriceUp" Grid.Row="3" Margin="5"/>
+                                <Label Content="Статус" Grid.Row="4"/>
+                                <WrapPanel Grid.Row="5">
+                                    <CheckBox x:Name="cbStatusService" VerticalAlignment="Center" Margin="5"/>
+                                    <Label Content="Активный/неактивный"/>
+                                </WrapPanel>
+                                <Button x:Name="btnSaveChangeService" Content="Сохранить изменения услуги" Width="180" Grid.Row="6" Margin="5" Click="btnSaveChangeService_Click"/>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
